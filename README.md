@@ -26,7 +26,7 @@ If you are unsure how to do that, copy this:
 ```
 var script = document.createElement('script');
 script.id = 'AutoTrimps-Zek';
-script.src = 'https://Zorn192.github.io/AutoTrimps/AutoTrimps2.js';
+script.src = 'https://SoeOrl.github.io/AutoTrimps/AutoTrimps2.js';
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);
 ```  
@@ -70,7 +70,7 @@ If you are unsure how to do that, copy this:
 ```
 var script = document.createElement('script');
 script.id = 'AutoTrimps-Graphs';
-script.src = 'https://Zorn192.github.io/AutoTrimps/GraphsOnly.js';
+script.src = 'https://SoeOrl.github.io/AutoTrimps/GraphsOnly.js';
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);
 ```  

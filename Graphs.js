@@ -5,7 +5,7 @@ var allSaveData = [],
 null !== tmpGraphData && (console.log("Graphs: Found allSaveData (portal runs data). Yay!"), (allSaveData = tmpGraphData)), (MODULES.graphs = {}), (MODULES.graphs.useDarkAlways = !1);
 var head = document.getElementsByTagName("head")[0],
     chartscript = document.createElement("script");
-(chartscript.type = "text/javascript"), (chartscript.src = "https://Zorn192.github.io/AutoTrimps/highcharts.js"), head.appendChild(chartscript);
+(chartscript.type = "text/javascript"), (chartscript.src = "https://SoeOrl.github.io/AutoTrimps/highcharts.js"), head.appendChild(chartscript);
 var newItem = document.createElement("TD");
 newItem.appendChild(document.createTextNode("Graphs")), newItem.setAttribute("class", "btn btn-default"), newItem.setAttribute("onclick", "autoToggleGraph(); drawGraph(undefined, undefined, true);");
 var settingbarRow = document.getElementById("settingsTable").firstElementChild.firstElementChild;
