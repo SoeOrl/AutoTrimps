@@ -43,6 +43,9 @@
     		"Kangarimp",
     		"Entimp",
     		"Carbimp",
+			"Voidsnimp",
+			"Shadimp",
+			"Cthulimp"
 	];
 
 	//Colors for special imps (This has been disabled)
@@ -112,40 +115,53 @@
 			var cell = cells[i];
 
 
+			if (cell.customData === undefined && cell.customProcessed === undefined)
+			{
+				$cell.customData = $cell.innerHTML;
+				if(cell.special.length < 1)
+				{
+					$cell.customData = "&nbsp;"
+				}
+
+			}
+			$cell.innerHTML = $cell.customData
+
+
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
-				if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
+				if ($cell.innerHTML.indexOf("glyphicon glyphicon-italic") === -1)	
+					$cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-italic\"></span> "; 
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
+			 if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
-				if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
+				if ($cell.innerHTML.indexOf("glyphicon glyphicon-sunglasses") === -1)	
+				// 
+					$cell.innerHTML = $cell.innerHTML + "<span class=\"glyphicon glyphicon-sunglasses\"></span> " + "<span>" + cell.name.charAt(0) + "</span>"; 
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 10px #fb753f';
 			}
 
-			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
+			 if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
-				if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-hazard\"></span> ";
+				if ($cell.innerHTML.indexOf("glyphicon glyphicon-hazard") === -1)	
+					$cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-hazard\"></span> "; 
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.powerful; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 10px #8c0000';
 			}
       
-      			else if(M["fightinfo"].fast.indexOf(cell.name) > -1)				// Fast imp
+      			 if(M["fightinfo"].fast.indexOf(cell.name) > -1)				// Fast imp
 			{
-				//if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-forward\"></span> ";
+				if ($cell.innerHTML.indexOf("glyphicon glyphicon-forward") === -1)	
+					$cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-forward\"></span> "; 
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.fast; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
@@ -156,7 +172,7 @@
 			if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
 			{
 			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-flask\"></span> ";
+			    $cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-flask\"></span> "; 
 
 			  $cell.title = cell.name;
 			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
@@ -165,7 +181,7 @@
 			if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
 			{
 			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"icomoon icon-air\"></span> ";
+			    $cell.innerHTML = $cell.innerHTML +  "<span class=\"icomoon icon-air\"></span> "; 
 
 			  $cell.title = cell.name;
 			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
@@ -174,12 +190,14 @@
 			if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
 			{
 			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-certificate\"></span> ";
+			    $cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-certificate\"></span> "; 
 
 			  $cell.title = cell.name;
 			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
+			$cell.customProcessed = true
+
 		}
 	}
 
