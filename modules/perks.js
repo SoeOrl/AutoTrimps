@@ -78,7 +78,7 @@ AutoPerks.displayGUI = function() {
     //Line 1 of the UI
     apGUI.$ratiosLine1 = document.createElement("DIV");
     apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry","Pheromones","Motivation"];
+    var listratiosLine1 = ["Resourceful","Coordinated","Resilience","Carpentry","Pheromones","Motivation"];
     for (var i in listratiosLine1)
         AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
@@ -647,6 +647,8 @@ AutoPerks.initializePerks = function () {
     var bait = new AutoPerks.FixedPerk("bait", 4, 30);
     var trumps = new AutoPerks.FixedPerk("trumps", 3, 30);
     var packrat = new AutoPerks.FixedPerk("packrat", 3, 30);
+    var overkill = new AutoPerks.FixedPerk("overkill", 1000000, 0, 30);
+
     //variable
     var looting = new AutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
     var toughness = new AutoPerks.VariablePerk("toughness", 1, false,         1, 0.05);
@@ -658,7 +660,6 @@ AutoPerks.initializePerks = function () {
     var resilience = new AutoPerks.VariablePerk("resilience", 100, true,      7, 0.1);
     var coordinated = new AutoPerks.VariablePerk("coordinated", 150000, true, 8, 0.1);
     var resourceful = new AutoPerks.VariablePerk("resourceful", 50000, true,  9, 0.05);
-    var overkill = new AutoPerks.VariablePerk("overkill", 1000000, true,      10, 0.005, 30);
     //fluffy
     var capable = new AutoPerks.FixedPerk("capable", 100000000, 0, 10, "fluffy");
     var cunning = new AutoPerks.VariablePerk("cunning", 100000000000, false,      11, 0.05);

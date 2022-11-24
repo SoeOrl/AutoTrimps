@@ -1,5 +1,5 @@
 var script = document.createElement('script');
-script.id = 'AutoTrimps-Zek';
+script.id = 'AutoTrimps-SoeOrl';
 script.src = 'https://SoeOrl.github.io/AutoTrimps/AutoTrimps2.js';
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);

@@ -1,4 +1,4 @@
-# AutoTrimps - Zek Fork
+# AutoTrimps - SoeOrl Fork
 
 
 
@@ -9,7 +9,7 @@ Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestio
 
 
 ## Current Version - Ongoing Development!
-- Zek Fork. All changes made by Zek using GenBTC as base. Currently up-to-date as of 06/2022.
+- SoeOrl Fork. All changes made by SoeOrl using GenBTC as base. Currently up-to-date as of 06/2022.
 
 
 
@@ -25,7 +25,7 @@ If clicking the link does not work, copy the contents of user.js into a new scri
 If you are unsure how to do that, copy this:  
 ```
 var script = document.createElement('script');
-script.id = 'AutoTrimps-Zek';
+script.id = 'AutoTrimps-SoeOrl';
 script.src = 'https://SoeOrl.github.io/AutoTrimps/AutoTrimps2.js';
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);

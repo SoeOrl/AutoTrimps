@@ -10,8 +10,42 @@ if (game.global.uberNature == "Wind" && getEmpowerment() != "Wind") {
         if ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
         else if (AutoStance==1) autoStance();
         else if (AutoStance==2) autoStance2();
-
     }
+
+    function doesCurrentOrNextHoldDarkEssence()
+    {
+        return ((getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) < 53) 
+        || ((getRandomIntSeeded(game.global.scrySeed + 2, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed + 2, 0, 100) < 53)))
+    }
+
+    function shoudSwitchStanceToGetDarkEssence()
+    {
+        if ((getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) < 53))
+        {
+            return true;
+        }
+        else if ((getRandomIntSeeded(game.global.scrySeed + 2, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed + 2, 0, 100) < 53)
+        && ((getCurrentEnemy().health / getCurrentEnemy().maxHealth) < 0.2 || getCurrentEnemy().health < calcOurDmg("max",false,true)))
+        {
+            return true
+        }
+        return false
+    }
+
+    var curEnemy = getCurrentEnemy(1);
+    var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
+
+    var curEnemyhealth = getCurrentEnemy(1);
+    var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
+
+    var min_zone = getPageSetting('ScryerMinZone');
+    var max_zone = getPageSetting('ScryerMaxZone');
+    var valid_min = game.global.world >= min_zone && game.global.world > 60;
+    var valid_max = max_zone <= 0 || game.global.world < max_zone;
+
+
+
+
 
 //Never
 var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
@@ -23,24 +57,41 @@ var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (isActiveSpireAT() || disActiveSpireAT()) && getPageSetting('ScryerUseinSpire2') == 0);
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (getEmpowerment() == "Poison" && (getPageSetting('ScryUseinPoison') == 0 || (getPageSetting('ScryUseinPoison') > 0 && game.global.world >= getPageSetting('ScryUseinPoison')))) || (getEmpowerment() == "Wind" && (getPageSetting('ScryUseinWind') == 0 || (getPageSetting('ScryUseinWind') > 0 && game.global.world >= getPageSetting('ScryUseinWind')))) || (getEmpowerment() == "Ice" && (getPageSetting('ScryUseinIce') == 0 || (getPageSetting('ScryUseinIce') > 0 && game.global.world >= getPageSetting('ScryUseinIce')))));
-    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('screwessence') == true && (countRemainingEssenceDrops() < 1 || game.global.world < 181));
+
 
     //check Corrupted Never
-    var curEnemy = getCurrentEnemy(1);
-    var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
+
     if (((never_scry) || getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0))) {
         autostancefunction();
         wantToScry = false;
         return;
     }
     //check Healthy never
-    var curEnemyhealth = getCurrentEnemy(1);
-    var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
+
     if (((never_scry) || getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0))) {
         autostancefunction();
         wantToScry = false;
         return;
     }
+
+    if (getPageSetting('UseScryerStance') == true
+    && countRemainingEssenceDrops() > 0
+    && game.global.world >= 181
+    && doesCurrentOrNextHoldDarkEssence()
+       && valid_min 
+       && valid_max 
+       && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)
+       && !(!game.global.mapsActive && game.global.spireActive)) {
+            debug("Enemy contains Dark Essence, Scrying")
+            if (shoudSwitchStanceToGetDarkEssence())
+            {
+            setFormation(scry);
+            return;
+            }
+        }
+
+
 
 //Force
 var use_scryer = use_scryer || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1);
@@ -49,6 +100,8 @@ var use_scryer = use_scryer || (getPageSetting('UseScryerStance') == true && gam
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().level > game.global.world && getPageSetting('ScryerUseinPMaps') == 1 && getCurrentMapObject().location != "Bionic");
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && (isActiveSpireAT() || disActiveSpireAT()) && getPageSetting('ScryerUseinSpire2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && ((getEmpowerment() == "Poison" && getPageSetting('ScryUseinPoison') > 0 && game.global.world < getPageSetting('ScryUseinPoison')) || (getEmpowerment() == "Wind" && getPageSetting('ScryUseinWind') > 0 && game.global.world < getPageSetting('ScryUseinWind')) || (getEmpowerment() == "Ice" && getPageSetting('ScryUseinIce') > 0 && game.global.world < getPageSetting('ScryUseinIce'))));
+    
+
 
     //check Corrupted Force
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1 && getPageSetting('UseScryerStance') == true) || (use_scryer)) {
@@ -101,14 +154,14 @@ if (useoverkill && game.portal.Overkill.level > 0 && getPageSetting('UseScryerSt
         }
     }
 
-//Default
-var min_zone = getPageSetting('ScryerMinZone');
-var max_zone = getPageSetting('ScryerMaxZone');
-var valid_min = game.global.world >= min_zone && game.global.world > 60;
-var valid_max = max_zone <= 0 || game.global.world < max_zone;
 
-if (getPageSetting('UseScryerStance') == true && valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)) {
-    if (oktoswitch) {
+//Default
+
+
+if (getPageSetting('UseScryerStance') == true && valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)
+&& (getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed + 1, 0, 100) < 53)) {
+
+if (oktoswitch) {
         setFormation(scry);
         wantToScry = true;
         return;

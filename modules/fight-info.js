@@ -113,7 +113,7 @@
 
 			// Cell data
 			var cell = cells[i];
-
+			
 
 			if (cell.customData === undefined && cell.customProcessed === undefined)
 			{
@@ -126,6 +126,17 @@
 			}
 			$cell.innerHTML = $cell.customData
 
+
+			// subtract 1 as array is 1 - 99
+			var containsEssence = getRandomIntSeeded(game.global.scrySeed - game.global.lastClearedCell + i, 0, 100) > 49 && getRandomIntSeeded(game.global.scrySeed - game.global.lastClearedCell + i, 0, 100) < 53
+
+			if (i > game.global.lastClearedCell && !game.global.mapsActive && game.global.world >= 181 && containsEssence )
+			{
+				if ($cell.innerHTML.indexOf("glyphicon glyphicon-plus-sign") === -1)	
+					$cell.innerHTML = $cell.innerHTML +  "<span class=\"glyphicon glyphicon-plus-sign\"></span> "; 
+				
+				$cell.style.textShadow = '0px 0px 10px #fb753f ';
+			}
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{

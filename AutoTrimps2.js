@@ -1,6 +1,7 @@
-var ATversion = 'Zek v5.0.0',
+var ATversion = 'SoeOrl v5.0.1',
     atscript = document.getElementById('AutoTrimps-script'),
-    basepath = 'https://SoeOrl.github.io/AutoTrimps/', //Link to your own Github here if you forked!
+    // basepath = 'https://SoeOrl.github.io/AutoTrimps/', //Link to your own Github here if you forked!
+    basepath = 'file://C:\\Users\\Soeren\\Desktop\\AutoTrimps\\', //Link to your own Github here if you forked!
     modulepath = 'modules/';
 null !== atscript && (basepath = atscript.src.replace(/AutoTrimps2\.js$/, ''));
 
@@ -26,7 +27,7 @@ function initializeAutoTrimps() {
     for (var m in ATmoduleList) {
         ATscriptLoad(modulepath, ATmoduleList[m]);
     }
-    debug('AutoTrimps - Zek Fork Loaded!', '*spinner3');
+    debug('AutoTrimps - SoeOrl Fork Loaded!', '*spinner3');
 }
 
 var changelogList = [];
